@@ -83,6 +83,7 @@ class Inventory
         @books.find { |book| book.isbn == isbn }
     end
 
+    # since there might be multiple books by the same perosn
     def find_books_by_author(author)
         @books.select { |book| book.author.downcase.include?(author.downcase) }
     end
