@@ -64,15 +64,11 @@ class Inventory
     end
 
     def save_books
-        unless File.exist?(file_path)
-            File.write(file_path, "")
-        else
-            CSV.open(file_path, "w", headers: ["title", "author", "isbn", "count"], write_headers: true) do |csv|
-                @books.each do |book|
-                    csv << book.to_hash.values
-                end
+        CSV.open(file_path, "w", headers: ["title", "author", "isbn", "count"], write_headers: true) do |csv|
+            @books.each do |book|
+                csv << book.to_hash.values
             end
-        end  
+        end
     end
 
     def remove_book_by_isbn(isbn)
@@ -87,7 +83,7 @@ class Inventory
     def find_books_by_author(author)
         @books.select { |book| book.author.downcase.include?(author.downcase) }
     end
-
+    # kinda fuzzy
     def find_books_by_title(title)
         @books.select { |book| book.title.downcase.include?(title.downcase) }
     end
@@ -110,8 +106,118 @@ file_path = "books.csv"
 inventory = Inventory.new(file_path)
 
 inventory.load_books
-inventory.add_book(Book.new("The Great Gatsby", "F. Scott Fitzgerald", "978-0743273565",1))
-inventory.add_book(Book.new("To Kill a Mockingbird", "Harper Lee", "978-0061120084",1))
-inventory.list_books
-inventory.save_books
-inventory.list_sorted_by_isbn
+
+def print_book(book)
+    puts "Title: #{book.title} | Author: #{book.author} | ISBN: #{book.isbn} | Count: #{book.count}"
+end
+
+loop do
+    puts "\nChoose an option:"
+    puts "1) List books"
+    puts "2) Add new book"
+    puts "3) Remove book by ISBN"
+    puts "4) Search books"
+    puts "5) Exit"
+    print "> "
+
+    choice = STDIN.gets&.strip
+    break unless choice
+
+    case choice
+    when "1"
+        inventory.list_books
+    when "2"
+        print "Title: "
+        title = STDIN.gets&.strip
+        print "Author: "
+        author = STDIN.gets&.strip
+        print "ISBN: "
+        isbn = STDIN.gets&.strip
+        print "Count (default 1): "
+        count_input = STDIN.gets&.strip
+
+        if [title, author, isbn].any? { |v| v.nil? || v.empty? }
+            puts "All fields are required."
+            next
+        end
+
+        count = count_input.to_i
+        count = 1 if count <= 0
+
+        inventory.add_book(Book.new(title, author, isbn, count))
+        inventory.save_books
+        puts "Book added."
+    when "3"
+        print "ISBN to remove: "
+        isbn = STDIN.gets&.strip
+        if isbn.nil? || isbn.empty?
+            puts "ISBN is required."
+            next
+        end
+
+        inventory.remove_book_by_isbn(isbn)
+        inventory.save_books
+        puts "Book removed if it existed."
+    when "4"
+        puts "\nSearch by:"
+        puts "1) Title"
+        puts "2) Author"
+        puts "3) ISBN"
+        print "> "
+
+        search_choice = STDIN.gets&.strip
+        next if search_choice.nil?
+
+        case search_choice
+        when "1"
+            print "Title query: "
+            query = STDIN.gets&.strip
+            if query.nil? || query.empty?
+                puts "Title is required."
+                next
+            end
+
+            results = inventory.find_books_by_title(query)
+            if results.empty?
+                puts "No books found."
+            else
+                results.each { |book| print_book(book) }
+            end
+        when "2"
+            print "Author query: "
+            query = STDIN.gets&.strip
+            if query.nil? || query.empty?
+                puts "Author is required."
+                next
+            end
+
+            results = inventory.find_books_by_author(query)
+            if results.empty?
+                puts "No books found."
+            else
+                results.each { |book| print_book(book) }
+            end
+        when "3"
+            print "ISBN: "
+            isbn = STDIN.gets&.strip
+            if isbn.nil? || isbn.empty?
+                puts "ISBN is required."
+                next
+            end
+
+            book = inventory.find_book_by_isbn(isbn)
+            if book
+                print_book(book)
+            else
+                puts "No book found."
+            end
+        else
+            puts "Invalid choice."
+        end
+    when "5"
+        break
+    else
+        puts "Invalid choice."
+    end
+end
+
