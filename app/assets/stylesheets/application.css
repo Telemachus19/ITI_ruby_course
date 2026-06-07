@@ -1,10 +1,134 @@
 /*
- * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
+ * Application styles
  */
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	padding: 1rem;
+	background: #f7f8fb;
+	color: #222;
+}
+
+nav {
+	justify-content: space-between;
+	display: flex;
+	align-items: center;
+	font-size: 0.95em;
+	gap: 0.5rem;
+	max-width: 1024px;
+	margin: 0 auto 1rem;
+	padding: 0.5rem 1rem;
+	background: #fff;
+	border-radius: 8px;
+	box-shadow: 0 1px 4px rgba(16,24,40,0.04);
+}
+
+nav a, nav form {
+	display: inline-block;
+}
+
+main {
+	max-width: 1024px;
+	margin: 1rem auto;
+	background: #fff;
+	border-radius: 8px;
+	padding: 1.25rem;
+	box-shadow: 0 2px 8px rgba(16,24,40,0.06);
+}
+
+.notice {
+	color: #065f46; /* green-800 */
+	background: #ecfdf5;
+	border: 1px solid #d1fae5;
+	padding: 0.5rem 0.75rem;
+	border-radius: 6px;
+	margin: 0 auto 1rem;
+	max-width: 1024px;
+}
+
+.alert {
+	color: #7f1d1d; /* red-800 */
+	background: #fff1f2;
+	border: 1px solid #fecaca;
+	padding: 0.5rem 0.75rem;
+	border-radius: 6px;
+	margin: 0 auto 1rem;
+	max-width: 1024px;
+}
+
+section.products-list {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+	gap: 1rem;
+}
+
+.product-card {
+	padding: 0.75rem;
+	border-radius: 8px;
+	background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+	border: 1px solid rgba(16,24,40,0.04);
+}
+
+section.product {
+	display: flex;
+	gap: 1rem;
+	flex-direction: row;
+	align-items: flex-start;
+}
+
+section.product img {
+	border-radius: 8px;
+	flex-basis: 40%;
+	max-width: 40%;
+}
+
+.product-info {
+	flex: 1 1 60%;
+}
+
+form div {
+	margin-bottom: 0.75rem;
+}
+
+label {
+	display: block;
+	margin-bottom: 0.25rem;
+	font-weight: 600;
+}
+
+input[type="text"], input[type="email"], input[type="password"], textarea {
+	width: 100%;
+	padding: 0.5rem;
+	border-radius: 6px;
+	border: 1px solid #e6e9ef;
+}
+
+input[type="submit"], button {
+	background: #2563eb;
+	color: white;
+	border: none;
+	padding: 0.5rem 0.75rem;
+	border-radius: 6px;
+	cursor: pointer;
+}
+
+.muted { color: #6b7280; }
+
+.auth-card {
+	max-width: 420px;
+	margin: 1rem auto;
+	padding: 1rem 1.25rem;
+	background: #fff;
+	border-radius: 8px;
+	box-shadow: 0 4px 20px rgba(16,24,40,0.06);
+}
+
+.auth-card h1 {
+	margin-top: 0;
+	margin-bottom: 0.75rem;
+	font-size: 1.25rem;
+}
+
+.auth-actions { display:flex; gap:0.5rem; align-items:center; }
+
+

@@ -24,6 +24,19 @@
   </head>
 
   <body>
-    <%= yield %>
+    <nav>
+      <%= link_to "Home", root_path %>
+      <% if defined?(authenticated?) && authenticated? %>
+        <%= button_to "Log out", session_path, method: :delete %>
+      <% else %>
+        <%= link_to "Login", new_session_path %>
+      <% end %>
+    </nav>
+
+    <%= render "layouts/flash" %>
+
+    <main>
+      <%= yield %>
+    </main>
   </body>
 </html>

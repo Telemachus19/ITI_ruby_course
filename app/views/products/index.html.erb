@@ -1,0 +1,13 @@
+<h1>Products</h1>
+
+<div class="muted">Browse our catalog</div>
+
+<div style="margin-top:0.75rem;"> <%= link_to "New product", new_product_path if defined?(authenticated?) && authenticated? %> </div>
+
+<section class="products-list">
+  <% @products.each do |product| %>
+    <article class="product-card">
+      <h3><%= link_to product.name, product_path(product) %></h3>
+    </article>
+  <% end %>
+</section>
