@@ -1,0 +1,8 @@
+2026-06-06T14:47:11+03:00 -- info -- Processing Transactions User John Doe transaction with value -20, User John Doe transaction with value -30, User John Doe transaction with value -50, User John Doe transaction with value -100, User John Doe transaction with value -100, User Menna transaction with value -100...
+2026-06-06T14:47:11+03:00 -- info -- User John Doe transaction with value -20 succeeded
+2026-06-06T14:47:11+03:00 -- info -- User John Doe transaction with value -30 succeeded
+2026-06-06T14:47:11+03:00 -- info -- User John Doe transaction with value -50 succeeded
+2026-06-06T14:47:11+03:00 -- info -- User John Doe transaction with value -100 succeeded
+2026-06-06T14:47:11+03:00 -- warning -- John Doe has 0 balance
+2026-06-06T14:47:11+03:00 -- error -- User John Doe transaction with value -100 failed with message Not enough balance
+2026-06-06T14:47:11+03:00 -- error -- User Menna transaction with value -100 failed with message Menna not exist in the bank!!
