@@ -1,0 +1,20 @@
+<div id="<%= dom_id article %>">
+  <h2><%= article.title %></h2>
+
+  <div>
+    <strong>By:</strong> <%= article.user.email %> |
+    <strong>Public:</strong> <%= article.public %> |
+    <strong>Reports Count:</strong> <%= article.reports_count %> |
+    <strong>Archived:</strong> <%= article.archived %>
+  </div>
+
+  <% if article.image.attached? %>
+    <div>
+      <%= image_tag article.image %>
+    </div>
+  <% end %>
+
+  <div>
+    <%= article.content %>
+  </div>
+</div>

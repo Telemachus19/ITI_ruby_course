@@ -1,0 +1,19 @@
+<p style="color: green"><%= notice %></p>
+<p style="color: red"><%= alert %></p>
+
+<%= render @article %>
+
+<div>
+  <%= link_to "Back to articles", articles_path %> |
+
+  <% if user_signed_in? %>
+    <%= button_to "Report this article", report_article_path(@article), method: :post %>
+    
+    <% if @article.user == current_user %>
+      | <%= link_to "Edit this article", edit_article_path(@article) %>
+      | <%= button_to "Delete this article", @article, method: :delete, data: { confirm: "Are you sure?" } %>
+    <% end %>
+  <% else %>
+    <%= link_to "Sign in", new_user_session_path %> to edit, delete, or report this article.
+  <% end %>
+</div>

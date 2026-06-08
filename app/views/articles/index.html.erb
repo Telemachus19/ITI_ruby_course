@@ -1,0 +1,52 @@
+<p style="color: green"><%= notice %></p>
+<p style="color: red"><%= alert %></p>
+
+<% content_for :title, "Articles" %>
+
+<div>
+  <% if user_signed_in? %>
+    <span>Signed in as <%= current_user.email %></span> |
+    <%= link_to "New Article", new_article_path %> |
+    <%= button_to "Log out", destroy_user_session_path, method: :delete %>
+  <% else %>
+    <%= link_to "Log in", new_user_session_path %> |
+    <%= link_to "Register", new_user_registration_path %>
+  <% end %>
+</div>
+
+<h1>Articles Feed</h1>
+
+<div id="articles">
+  <% if @articles.any? %>
+    <% @articles.each do |article| %>
+      <article style="border-bottom: 1px solid #ccc; margin-bottom: 10px; padding-bottom: 10px;">
+        <h3><%= link_to article.title, article %></h3>
+        <div>
+          By: <%= article.user.email %> |
+          Public: <%= article.public %> |
+          Archived: <%= article.archived %>
+        </div>
+        
+        <% if article.image.attached? %>
+          <div>
+            <%= image_tag article.image, width: 100 %>
+          </div>
+        <% end %>
+
+        <p><%= truncate(article.content, length: 150) %></p>
+
+        <div>
+          <%= link_to "Show", article %>
+          <% if user_signed_in? %>
+            | <%= button_to "Report", report_article_path(article), method: :post %>
+            <% if article.user == current_user %>
+              | <%= link_to "Edit", edit_article_path(article) %>
+            <% end %>
+          <% end %>
+        </div>
+      </article>
+    <% end %>
+  <% else %>
+    <p>No articles available.</p>
+  <% end %>
+</div>
